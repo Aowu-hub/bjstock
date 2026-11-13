@@ -1,20 +1,20 @@
 {
- "version": "v2026.11.13-1429",
+ "version": "v2026.11.13-1435",
  "files": {
   ".nojekyll": "e3b0c44298fc1c14",
   "README.md": "8820c07e84fe6783",
-  "admin.html": "2d7bcc7847c5e2c8",
+  "admin.html": "1f86fbe7287659ca",
   "icons/icon-180.png": "c87d9afa8ecf0f79",
   "icons/icon-192.png": "aa94c55fd1371eda",
   "icons/icon-512.png": "b8513d9cb5a94a6f",
-  "index.html": "8314fc804bb523c7",
+  "index.html": "9944d17d7d31157f",
   "link.json": "30fc8ba5934ba1df",
   "manifest.webmanifest": "a69478b1fdfad879",
-  "run.css": "f8e67c7edada3dc0",
-  "run.js": "68cbee6fffa6a049",
-  "stock.html": "27d1fc078d03ba89",
+  "run.css": "41cb201d3cc13f9d",
+  "run.js": "52497191a5937230",
+  "stock.html": "b9ed6225a3e7e87b",
   "sw.js": "27b1ee2b8f962770",
-  "version.js": "ea212e794afca30b",
-  "view.html": "8dc4452817745ae6"
+  "version.js": "69651a6356feea6f",
+  "view.html": "a35976bb69edb776"
  }
 }

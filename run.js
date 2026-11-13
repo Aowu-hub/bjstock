@@ -65,14 +65,14 @@
   function post(st2, api, args) {
     return fetch(st2.u, { method: 'POST', body: JSON.stringify({ api: api, args: args, kh: st2.kh }), credentials: 'omit', redirect: 'follow' })
       .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
-      .then(function (t) { try { return JSON.parse(t); } catch (e) { throw new Error('NET'); } });
+      .then(function (t) { try { return JSON.parse(t); } catch (e) { var x = new Error('NET'); x.body = String(t || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 160); throw x; } });
   }
   function call(api, args) {
     if (api === 'smv2_getAppUrl') return Promise.resolve(ROOT);
     return ready().then(function (s) {
       var once = function () { return post(s, api, args); };
       return once().catch(function (e) { if (READ.test(api)) return new Promise(function (r) { setTimeout(r, 800); }).then(once); throw e; })
-        .catch(function (e) { netCard(); throw new Error('ติดต่อเซิร์ฟเวอร์ไม่ได้ • Cannot reach the server (' + (e && e.message || e) + ')'); })
+        .catch(function (e) { netCard(api, e); throw new Error('ติดต่อเซิร์ฟเวอร์ไม่ได้ • Cannot reach the server (' + (e && e.message || e) + ')'); })
         .then(function (j) {
           if (j && j.ok) return j.data;
           var m = String((j && j.error) || 'error');
@@ -82,11 +82,14 @@
     });
   }
   var cardShown = false;
-  function netCard() {
+  function netCard(api, e) {
+    try { console.warn('[bjstock] door', api, e && e.message, e && e.body || ''); } catch (x) {}
     if (cardShown || !document.body) return; cardShown = true;
+    var why = String(api || '') + ' · ' + String((e && e.message) || e || '') + (e && e.body ? ' · ' + e.body : '');
     var c = document.createElement('div'); c.className = 'bjNet'; c.setAttribute('role', 'alert');
     c.innerHTML = '<b>⚠ ติดต่อเซิร์ฟเวอร์ไม่ได้ • Can\'t reach the server</b><span>ตรวจเน็ตแล้วลองใหม่ • Check the internet and try again</span>' +
-      '<div><button type="button" class="bjNetGo">⟳ ลองใหม่ • Try again</button>' + (st ? '<a target="_top" href="' + st.u + location.search.replace(/"/g, '') + '">เปิดหน้าเดิม • Open the old page</a>' : '') + '</div>';
+      '<small class="bjNetWhy"></small><div><button type="button" class="bjNetGo">⟳ ลองใหม่ • Try again</button>' + (st ? '<a target="_top" href="' + st.u + location.search.replace(/"/g, '') + '">เปิดหน้าเดิม • Open the old page</a>' : '') + '</div>';
+    c.querySelector('.bjNetWhy').textContent = why;
     document.body.appendChild(c);
     c.querySelector('.bjNetGo').onclick = function () { location.reload(); };
   }

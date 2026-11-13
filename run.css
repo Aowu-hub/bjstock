@@ -14,3 +14,4 @@
 .bjNet div { display: flex; gap: 10px; align-items: center; margin-top: 4px; }
 .bjNet button { padding: 6px 12px; border-radius: 8px; border: 0; background: #e0a84f; color: #1a1027; font: inherit; font-weight: 700; cursor: pointer; }
 .bjNet a { color: #e0a84f; }
+.bjNet .bjNetWhy{display:block;opacity:.7;font-size:12px;word-break:break-all;margin:6px 0}
