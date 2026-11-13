@@ -16,7 +16,7 @@
   window.SMV2_APP_URL = ROOT;
   window.BJSTOCK = { root: ROOT };
 
-  function load() { try { var v = JSON.parse(localStorage.getItem(LS) || 'null'); return v && v.u && v.kh ? v : null; } catch (e) { return null; } }
+  function load() { try { var v = JSON.parse(localStorage.getItem(LS) || 'null'); return v && v.u && v.kh && /\/exec$/.test(v.u) ? v : null; } catch (e) { return null; } }
   function keep(v) { try { if (v) localStorage.setItem(LS, JSON.stringify(v)); else localStorage.removeItem(LS); } catch (e) {} }
   var st = load(), waiters = [];
   function ready() { return st ? Promise.resolve(st) : new Promise(function (res) { waiters.push(res); askKey(); }); }
@@ -49,10 +49,12 @@
         go.disabled = true; go.textContent = '… กำลังตรวจ • Checking'; err.textContent = '';
         fetch(BASE + 'link.json', { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('NOLINK'); return r.json(); })
           .then(function (lk) { return open(k, lk); })
+          .then(function (obj) { if (!/\/exec$/.test(String(obj && obj.u || ''))) throw new Error('OLDLINK'); return obj; })
           .then(function (obj) { return sha('bjstock-site:' + k).then(function (kh) { box.remove(); box = null; unlocked({ u: obj.u, kh: kh, at: new Date().toISOString() }); }); })
           .catch(function (er) {
             go.disabled = false; go.textContent = 'ปลดล็อก • Unlock';
-            err.textContent = String(er && er.message) === 'NOLINK' ? '✕ เว็บยังไม่ได้ตั้งรหัส แจ้งผู้ดูแล • The website is not set up yet — ask the admin' : '✕ รหัสไม่ถูกต้อง • Wrong key';
+             var em = String(er && er.message);
+            err.textContent = em === 'OLDLINK' ? '✕ ลิงก์ในเว็บเก่า แจ้งผู้ดูแลให้ตั้งรหัสใหม่ • The website link is outdated — ask the admin to set the key again' : em === 'NOLINK' ? '✕ เว็บยังไม่ได้ตั้งรหัส แจ้งผู้ดูแล • The website is not set up yet — ask the admin' : '✕ รหัสไม่ถูกต้อง • Wrong key';
             inp.select();
           });
       });
