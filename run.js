@@ -8,6 +8,17 @@
   var BASE = location.pathname.replace(/[^/]*$/, ''), ROOT = location.origin + BASE, LS = 'bjstock.unlock.v1';
   var FILE = { stock: 'stock.html', view: 'stock.html', sheets: 'stock.html', map: 'stock.html', users: 'stock.html', out: 'stock.html', links: 'stock.html', photos: 'view.html', admin: 'admin.html' };
   var here = location.pathname.slice(BASE.length) || 'index.html', P = new URLSearchParams(location.search), pg = P.get('page');
+  // 🛡 Super Admin on the installed app (13/11/2026 d): the app always starts at /bjstock/ without ?admin=…, so a device that
+  // once opened an &admin= link remembers it and puts it back; ?admin=off forgets it (the server still checks the key every call)
+  (function () {
+    var AK = 'bjstock.admin.v1', a = P.get('admin'), sv = null;
+    try { sv = localStorage.getItem(AK); } catch (e) {}
+    if (a === 'off') { try { localStorage.removeItem(AK); } catch (e) {} P.delete('admin'); }
+    else if (a) { if (a !== sv) try { localStorage.setItem(AK, a); } catch (e) {} return; }
+    else if (sv) P.set('admin', sv);
+    else return;
+    var q = P.toString(); history.replaceState(history.state, '', location.pathname + (q ? '?' + q : '') + location.hash);
+  })();
   if ((here === 'index.html' || here === '') && pg) {          // the page's own scripts must not start while we leave
     var noop = new Proxy(function () {}, { get: function (t, k) { return k === 'then' ? undefined : noop; }, apply: function () { return noop; } });
     window.google = { script: { run: noop, url: { getLocation: function () {} }, host: noop } };
