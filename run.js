@@ -73,6 +73,19 @@
     if (document.body) show(); else document.addEventListener('DOMContentLoaded', show);
   }
 
+  /* ---------- the app's own address → this website (13/11/2026 d) ----------
+     Some replies carry the Apps Script address (e.g. the stock index "url") and the pages build every link from it;
+     on the website those links must stay on GitHub. Any script.google.com …/exec or …/dev address becomes ROOT. */
+  var APPURL = /^https:\/\/script\.google\.com\/(?:a\/macros\/[^/]+|macros)\/s\/[\w-]+\/(?:exec|dev)/;
+  function toSite(v, d) {
+    if (typeof v === 'string') return APPURL.test(v) ? v.replace(APPURL, ROOT) : v;
+    if (!v || typeof v !== 'object' || (d || 0) > 8) return v;
+    if (Array.isArray(v)) { for (var i = 0; i < v.length; i++) v[i] = toSite(v[i], (d || 0) + 1); return v; }
+    for (var k in v) if (Object.prototype.hasOwnProperty.call(v, k)) v[k] = toSite(v[k], (d || 0) + 1);
+    return v;
+  }
+  try { var su = sessionStorage.getItem('smv2_app_url'); if (su && APPURL.test(su)) sessionStorage.removeItem('smv2_app_url'); } catch (e) {}
+
   /* ---------- calls ---------- */
   var READ = /^smv2_(get|check|list|linkReview|linkCatalogue|whOutData|whOutHistory|whOutCargo$|whRoomLoad|whGetCardLines|whOutMatch)/;
   function post(st2, api, args) {
@@ -87,7 +100,7 @@
       return once().catch(function (e) { if (READ.test(api)) return new Promise(function (r) { setTimeout(r, 800); }).then(once); throw e; })
         .catch(function (e) { netCard(api, e); throw new Error('ติดต่อเซิร์ฟเวอร์ไม่ได้ • Cannot reach the server (' + (e && e.message || e) + ')'); })
         .then(function (j) {
-          if (j && j.ok) return j.data;
+          if (j && j.ok) return toSite(j.data);
           var m = String((j && j.error) || 'error');
           if (/^SITE_KEY\b/.test(m) && !/NOT_SET/.test(m)) { keep(null); st = null; askKey('🔑 รหัสถูกเปลี่ยน ใส่รหัสใหม่ • The key was changed — type the new one'); return call(api, args); }
           throw new Error(m);
