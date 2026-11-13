@@ -1,0 +1,25 @@
+{
+ "id": "/bjstock/",
+ "name": "BJ Stock • สต๊อก",
+ "short_name": "BJ Stock",
+ "start_url": "/bjstock/",
+ "scope": "/bjstock/",
+ "display": "standalone",
+ "background_color": "#140a20",
+ "theme_color": "#140a20",
+ "lang": "th",
+ "icons": [
+  {
+   "src": "icons/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any maskable"
+  },
+  {
+   "src": "icons/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}

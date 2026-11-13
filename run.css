@@ -1,0 +1,16 @@
+/* bjstock run.css — the company-key screen + the "can't reach the server" card (themed like the app) */
+.bjKey { position: fixed; inset: 0; z-index: 99999; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(8,4,16,.86); backdrop-filter: blur(6px); }
+.bjkCard { width: min(400px, 100%); background: #1a1027; border: 1px solid #3b2a4d; border-radius: 16px; padding: 22px 20px; text-align: center; box-shadow: 0 24px 70px rgba(0,0,0,.6); color: #f3e9f5; font: 15px/1.5 "Sarabun", system-ui, sans-serif; }
+.bjkIc { font-size: 34px; }
+.bjkCard h2 { margin: 6px 0 4px; font-size: 19px; }
+.bjkCard p { margin: 0 0 12px; color: #b9a8c4; font-size: 13.5px; }
+.bjkIn { width: 100%; box-sizing: border-box; padding: 11px 12px; border-radius: 10px; border: 1px solid #3b2a4d; background: #120a1c; color: #f3e9f5; font: inherit; text-align: center; color-scheme: dark; }
+.bjkIn:focus { outline: none; border-color: #e0a84f; box-shadow: 0 0 0 3px rgba(224,168,79,.18); }
+.bjkCard .bjkErr { color: #ff8a8a; min-height: 1.4em; margin: 8px 0 0; }
+.bjkGo { margin-top: 10px; width: 100%; padding: 11px; border: 0; border-radius: 10px; background: linear-gradient(135deg,#b0263f,#7a1530); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+.bjkGo:disabled { opacity: .65; cursor: default; }
+.bjNet { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); z-index: 99998; width: min(420px, calc(100% - 32px)); display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 12px; background: #2a1020; border: 1px solid #7a2a3a; color: #f3e9f5; font: 14px/1.45 "Sarabun", system-ui, sans-serif; box-shadow: 0 16px 40px rgba(0,0,0,.5); }
+.bjNet span { color: #c9b4c4; font-size: 13px; }
+.bjNet div { display: flex; gap: 10px; align-items: center; margin-top: 4px; }
+.bjNet button { padding: 6px 12px; border-radius: 8px; border: 0; background: #e0a84f; color: #1a1027; font: inherit; font-weight: 700; cursor: pointer; }
+.bjNet a { color: #e0a84f; }

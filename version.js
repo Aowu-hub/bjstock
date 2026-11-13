@@ -1,0 +1,1 @@
+window.BJSTOCK_VERSION = "v2026.11.13-1421";
