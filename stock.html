@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="bjstock-version" content="v2026.11.16-1320">
+<meta name="bjstock-version" content="v2026.11.16-1429">
 <meta name="theme-color" content="#140a20">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
@@ -11,8 +11,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="BJ Stock">
 <title>BJ Stock • สต๊อก</title>
-<link rel="stylesheet" href="run.css?v2026.11.16-1320">
-<script src="run.js?v2026.11.16-1320"></script>
+<link rel="stylesheet" href="run.css?v2026.11.16-1429">
+<script src="run.js?v2026.11.16-1429"></script>
   <meta name="smv2-file" content="SMV2_FILE:SMV2_Stock patch 2026-11-09b">
 <!-- SMV2_Stock.html
      "สต๊อกบ้านใหม่ • New House Stocks" — its own page: <web app URL>?page=stock
@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-.smv2-file-stamp::after { content: "SMV2_FILE:SMV2_Styles patch 2026-11-16"; }
+.smv2-file-stamp::after { content: "SMV2_FILE:SMV2_Styles patch 2026-11-16b"; }
 /* SMV2_Styles.html — ALL styles for every page (admin, viewer, New House Stocks, login), merged 01/10/2026.
    Stock Master V2 — all CSS. Theme tokens, background system, HUD
    corner brackets and the spinning star checkbox are carried over from
@@ -3021,6 +3021,8 @@ button.shPt { font: inherit; color: inherit; font-family: var(--mono); font-size
 .fxCur { font-family: var(--mono); color: var(--ink); font-size: 1.05em; }
 .fxWas { margin: 0; color: #ffc46b; font-size: .92em; }
 .fxErr { margin: 0; color: #ff8a8a; font-size: .92em; }
+.shRow.fxBusy { opacity: .55; pointer-events: none; transition: opacity .2s; }
+.shRow.fxFlash { animation: flashIn 1.6s ease-out; }
 .fxPick { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
 .fxPick > button:not(.small) { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left; padding: 12px 14px; }
 .fxPick > button small { font-size: max(12px, calc(12px * var(--fs))); opacity: .8; font-weight: 400; }
@@ -3077,7 +3079,7 @@ button.shPt { font: inherit; color: inherit; font-family: var(--mono); font-size
 <div id="toast" class="toast" hidden></div>
 
 <script>
-window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16';   // 🔎 file stamp for smv2_checkFiles (code, not a comment: Apps Script strips comments)
+window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16b';   // 🔎 file stamp for smv2_checkFiles (code, not a comment: Apps Script strips comments)
 /* SMV2_Common.html — shared page scripts (merged 01/10/2026):
      1. window.SMV2Auth    — name + PIN login screen + welcome/loading box (was SMV2_Login.html)
      2. window.SMV2History — New House Stocks list + links           (was SMV2_History.html)
@@ -3645,6 +3647,25 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16';   // 🔎 fi
       if (window.SMV2Auth && SMV2Auth.isRoleError(e)) { SMV2Auth.roleBlock(H.el.body, (H.url || window.SMV2_APP_URL || '').split('?')[0] + '?page=view', e); return; }
       H.el.body.innerHTML = '<div class="shEmpty">โหลดไม่สำเร็จ • Could not load: ' + esc((e && e.message) || e) + '</div>';
     });
+  }
+
+  /** ✎ after a count is saved (16/11/2026): fetch the fresh data quietly and swap ONLY that item's row (the page, scroll,
+      filters and other open rows stay); an open detail panel re-opens with the new counts. Falls back to a full load. */
+  function refreshItem(key) {
+    var sel = '.shRow[data-key="' + String(key).replace(/["\\]/g, '\\$&') + '"]', rows = [].slice.call(H.el.body.querySelectorAll(sel));
+    rows.forEach(function (r) { r.classList.add('fxBusy'); });
+    run('smv2_getStockHistory', isMaster() ? ['ALL'] : isOH() ? ['OH'] : isWH() ? ['WH'] : [], function (d) {
+      d = d || {}; if (!(Number(d.format) >= 7)) return load();
+      H.data = prep(d);
+      var it = H.data.byKey[key]; if (!it || !rows.length) return load();
+      rows.forEach(function (r) {
+        var det = r.nextSibling, open = det && det.classList && det.classList.contains('shDetail');
+        if (open) det.remove();
+        var nr = rowEl(it); r.parentNode.replaceChild(nr, r);
+        nr.classList.add('fxFlash'); setTimeout(function () { nr.classList.remove('fxFlash'); }, 1600);
+        if (open) nr.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+    }, function () { rows.forEach(function (r) { r.classList.remove('fxBusy'); }); load(); });
   }
 
   /** "1 · แปรงลวด/… (BRUSH)" -> "1 · แปรงลวด/… (BRUSH / SPONGE / …)" from SMV2_StockCategories. */
@@ -4701,8 +4722,8 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16';   // 🔎 fi
         okB.disabled = true; okB.innerHTML = '<span class="auroraLoader tiny"><span></span></span> กำลังบันทึก… • Saving…';
         var e2 = cf.querySelector('.fxErr'); e2.hidden = true;
         run('smv2_countFixSave', [o, H.cfg.adminKey || H.cfg.token || ''], function () {
-          cf.innerHTML = '<p class="fxQ ok">✓ บันทึกแล้ว กำลังโหลดใหม่… • Saved — reloading…</p>';
-          setTimeout(function () { close(); load(); }, 500);
+          cf.innerHTML = '<p class="fxQ ok">✓ บันทึกแล้ว • Saved</p>';
+          setTimeout(function () { close(); refreshItem(it.key); }, 350);   // only this row refreshes (16/11/2026)
         }, function (er) { okB.disabled = false; okB.textContent = '✓ ยืนยัน • Confirm'; e2.textContent = '✕ ' + String((er && er.message) || er).replace(/^Error:\s*/, ''); e2.hidden = false; });
       };
     };
