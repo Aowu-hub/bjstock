@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="bjstock-version" content="v2026.11.13-1641">
+<meta name="bjstock-version" content="v2026.11.16-1320">
 <meta name="theme-color" content="#140a20">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
@@ -11,8 +11,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="BJ Stock">
 <title>รูปนับสต๊อก • Count photos</title>
-<link rel="stylesheet" href="run.css?v2026.11.13-1641">
-<script src="run.js?v2026.11.13-1641"></script>
+<link rel="stylesheet" href="run.css?v2026.11.16-1320">
+<script src="run.js?v2026.11.16-1320"></script>
   <meta name="smv2-file" content="SMV2_FILE:SMV2_View patch 2026-10-18c">
 <!-- SMV2_View.html
      📷 รูปนับสต๊อก • Count photos (07/10/2026, ?page=photos): READ-ONLY page of the CHECKED + ACTIVE
@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-.smv2-file-stamp::after { content: "SMV2_FILE:SMV2_Styles patch 2026-11-13"; }
+.smv2-file-stamp::after { content: "SMV2_FILE:SMV2_Styles patch 2026-11-16"; }
 /* SMV2_Styles.html — ALL styles for every page (admin, viewer, New House Stocks, login), merged 01/10/2026.
    Stock Master V2 — all CSS. Theme tokens, background system, HUD
    corner brackets and the spinning star checkbox are carried over from
@@ -3019,6 +3019,10 @@ button.shPt { font: inherit; color: inherit; font-family: var(--mono); font-size
 .fxCur { font-family: var(--mono); color: var(--ink); font-size: 1.05em; }
 .fxWas { margin: 0; color: #ffc46b; font-size: .92em; }
 .fxErr { margin: 0; color: #ff8a8a; font-size: .92em; }
+.fxPick { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+.fxPick > button:not(.small) { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; text-align: left; padding: 12px 14px; }
+.fxPick > button small { font-size: max(12px, calc(12px * var(--fs))); opacity: .8; font-weight: 400; }
+.fxPick .fxCancel { align-self: flex-end; }
 .fxBtns { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; margin-top: 4px; }
 .fxBtns .fxUndo { margin-right: auto; }
 .fxQ { margin: 0 0 8px; font-weight: 700; }
@@ -3142,7 +3146,7 @@ button.shPt { font: inherit; color: inherit; font-family: var(--mono); font-size
 </aside>
 
 <script>
-window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-13';   // 🔎 file stamp for smv2_checkFiles (code, not a comment: Apps Script strips comments)
+window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16';   // 🔎 file stamp for smv2_checkFiles (code, not a comment: Apps Script strips comments)
 /* SMV2_Common.html — shared page scripts (merged 01/10/2026):
      1. window.SMV2Auth    — name + PIN login screen + welcome/loading box (was SMV2_Login.html)
      2. window.SMV2History — New House Stocks list + links           (was SMV2_History.html)
@@ -4712,8 +4716,9 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-13';   // 🔎 fi
   }
   function todayIso() { var d = new Date(Date.now() + 7 * 3600000); return d.toISOString().slice(0, 10); }   // Bangkok
   function fixPlace() { return isOH() ? 'OH' : isWH() ? 'WH' : 'NH'; }
-  function fixOpen(it, date, rawHint) {
+  function fixOpen(it, date, rawHint, chosen) {
     var old = document.querySelector('.fxOv'); if (old) old.remove();
+    if (date && !chosen && date !== todayIso()) return fixChoose(it, date, rawHint);   // ＋ new count today, or ✎ change this one (16/11/2026)
     var adding = !date, pts = it.series || it._pts || null, cur = '';
     var findRaw = function (d) {
       var c = (pts || []).filter(function (p) { return p[0] === d && p[3] !== 2; }).pop();
@@ -4746,7 +4751,8 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-13';   // 🔎 fi
     document.addEventListener('keydown', onKey, true);
     ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
     $('.fxX').onclick = close; $('.fxCancel').onclick = close;
-    if (adding) dIn.addEventListener('change', function () { var c = findRaw(dIn.value); $('.fxCur').textContent = c === '' ? '— ไม่มียอด • no count' : c; });
+    var showCur = function () { var c = findRaw(dIn.value); $('.fxCur').textContent = c === '' ? '— ไม่มียอด • no count' : c; };
+    if (adding) { dIn.addEventListener('change', showCur); showCur(); }
     setTimeout(function () { inp.focus(); }, 30);
     inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); $('.fxNext').click(); } });
     var ask = function (o) {                                // ✓ every change is confirmed first
@@ -4779,6 +4785,29 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-13';   // 🔎 fi
       ask(mkO({ date: d, raw: v, old: adding ? findRaw(d) : cur, note: $('.fxNoteIn').value.trim() }));
     };
     if (fx) $('.fxUndo').onclick = function () { ask(mkO({ date: date, undo: true, old: cur, note: $('.fxNoteIn').value.trim() })); };
+  }
+  /** tap on a counted day (16/11/2026): first choose — ＋ a new count for today, or ✎ change the count of that day */
+  function fixChoose(it, date, rawHint) {
+    var name = it.link ? it.link.model : (it.en || it.item), ov = mk('div', 'fxOv'), raw = rawHint;
+    if (raw === undefined) {
+      var c = (it.series || it._pts || []).filter(function (p) { return p[0] === date && p[3] !== 2; }).pop(), l = (it.last4 || []).filter(function (p) { return p.d === date && !p.mv && !p.est; }).pop();
+      raw = c ? String(c[1]) : l ? String(l.raw) : '';
+    }
+    ov.innerHTML = '<div class="fxSheet hud-frame" role="dialog" aria-modal="true" aria-label="ยอดนับ • Count">' +
+      '<div class="fxHead"><b>' + esc(name) + '</b><button type="button" class="fxX" aria-label="ปิด • Close">✕</button></div>' +
+      '<div class="fxPick">' +
+        '<button type="button" class="btn-primary fxPickNew">＋ นับใหม่ วันนี้ • New count today<small>' + be(todayIso()) + '</small></button>' +
+        '<button type="button" class="btn-ghost fxPickFix">✎ แก้ยอดวันที่นี้ • Change this count<small>' + be(date) + (raw !== '' ? ' · ยอด • count ' + esc(raw) : '') + '</small></button>' +
+        '<button type="button" class="btn-ghost small fxCancel">ยกเลิก • Cancel</button></div></div>';
+    document.body.appendChild(ov);
+    var close = function () { ov.remove(); document.removeEventListener('keydown', onKey, true); };
+    var onKey = function (e) { if (e.key === 'Escape') { e.preventDefault(); close(); } };
+    document.addEventListener('keydown', onKey, true);
+    ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
+    ov.querySelector('.fxX').onclick = close; ov.querySelector('.fxCancel').onclick = close;
+    ov.querySelector('.fxPickNew').onclick = function () { close(); fixOpen(it, '', undefined, true); };
+    ov.querySelector('.fxPickFix').onclick = function () { close(); fixOpen(it, date, rawHint, true); };
+    setTimeout(function () { ov.querySelector('.fxPickNew').focus(); }, 30);
   }
   function rowEl(it) {
     var r = mk('div', 'shRow');
@@ -4820,7 +4849,7 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-13';   // 🔎 fi
         return;
       }
       var fxd = !p.start && it.fixed && it.fixed[p.d], ed = canFix() && !p.start;   // ✎ (13/11/2026)
-      cells += '<div class="shC f' + f + ' p' + f + (p.start ? ' start' : '') + (fxd ? ' fxd' : '') + (ed ? ' fxEd' : '') + '"' + (ed ? ' data-fd="' + esc(p.d) + '"' : '') + ' title="' + esc((p.start ? 'ยอดตั้งต้น ไม่มีวันที่ในชีต • opening count, no date in the sheet' : p.d) + ' · ' + (STATE_TXT[p.st] || p.st) + fixTxt(fxd) + (ed ? ' · ✎ แตะเพื่อแก้ • tap to change' : '')) + '">' +
+      cells += '<div class="shC f' + f + ' p' + f + (p.start ? ' start' : '') + (fxd ? ' fxd' : '') + (ed ? ' fxEd' : '') + '"' + (ed ? ' data-fd="' + esc(p.d) + '"' : '') + ' title="' + esc((p.start ? 'ยอดตั้งต้น ไม่มีวันที่ในชีต • opening count, no date in the sheet' : p.d) + ' · ' + (STATE_TXT[p.st] || p.st) + fixTxt(fxd) + (ed ? ' · ✎ แตะ: นับใหม่ / แก้ • tap: new count / change' : '')) + '">' +
         '<span class="v' + (code ? ' s' + code : '') + '">' + rawHtml(p.raw) + (fxd ? '<i class="fxM">✎</i>' : '') + '</span><span class="d">' + (p.start ? 'ตั้งต้น' : be(p.d)) + '</span></div>';
     });
     if (skipCell) cells += '<div class="shC f3 p3 skip" title="' + esc('ไม่ได้นับรอบนี้ (ใส่ - ในชีต) ยอดยังเป็นของครั้งก่อน • Not counted this round ("-" in the sheet) — the stock stays as the last count · ' + be(sk)) + '"><span class="v">–</span><span class="d">⤼ ' + be(sk) + '</span></div>';
