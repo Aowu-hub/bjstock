@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="bjstock-version" content="v2026.11.16-1429">
+<meta name="bjstock-version" content="v2026.11.17-0946">
 <meta name="theme-color" content="#140a20">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
@@ -11,9 +11,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="BJ Stock">
 <title>BJ Stock • สต๊อก</title>
-<link rel="stylesheet" href="run.css?v2026.11.16-1429">
-<script src="run.js?v2026.11.16-1429"></script>
-  <meta name="smv2-file" content="SMV2_FILE:SMV2_Stock patch 2026-11-09b">
+<link rel="stylesheet" href="run.css?v2026.11.17-0946">
+<script src="run.js?v2026.11.17-0946"></script>
+  <meta name="smv2-file" content="SMV2_FILE:SMV2_Stock patch 2026-11-17">
 <!-- SMV2_Stock.html
      "สต๊อกบ้านใหม่ • New House Stocks" — its own page: <web app URL>?page=stock
      (optional &section=<our section name>, &q=<search>, &admin=<key> adds "Sync now").
@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-.smv2-file-stamp::after { content: "SMV2_FILE:SMV2_Styles patch 2026-11-16b"; }
+.smv2-file-stamp::after { content: "SMV2_FILE:SMV2_Styles patch 2026-11-17"; }
 /* SMV2_Styles.html — ALL styles for every page (admin, viewer, New House Stocks, login), merged 01/10/2026.
    Stock Master V2 — all CSS. Theme tokens, background system, HUD
    corner brackets and the spinning star checkbox are carried over from
@@ -3037,6 +3037,39 @@ button.shPt { font: inherit; color: inherit; font-family: var(--mono); font-size
 .fxOld { color: var(--ink-dim); text-decoration: line-through; }
 .fxTo { color: #ffc46b; font-weight: 700; }
 .fxTo small { font-size: .6em; font-weight: 400; color: var(--ink-dim); }
+/* 🔗 Leftover models (17/11/2026, ?page=leftovers) + the old name under a 📤 search hit */
+.modCard.m13 { --c: rgba(120,220,255,.75); } .homeCard.m13 { --c: rgba(120,220,255,.75); --g: rgba(120,220,255,.18); }
+.otHit .otAka { grid-column: 1; color: #9fe3ff; font-family: var(--mono); font-size: max(12px, calc(11.5px * var(--fs))); overflow-wrap: anywhere; }
+.loRow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.25fr) auto; gap: 8px; align-items: center; padding: 7px 10px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm); background: rgba(255,255,255,.03); margin-bottom: 4px; }
+.loRow.ask { border-color: rgba(255,214,102,.6); background: rgba(255,214,102,.06); }
+.loRow.g-BOUND { border-left: 3px solid rgba(107,200,140,.75); }
+.loRow.g-NOT { opacity: .85; }
+.loL, .loT { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; min-width: 0; }
+.loM { font-family: var(--mono); overflow-wrap: anywhere; }
+.loL small, .loT small { color: var(--ink-dim); font-size: max(12px, calc(11.5px * var(--fs))); }
+.loL .loNo { font-style: normal; color: var(--ink-dim); font-size: max(12px, calc(11px * var(--fs))); padding: 0 6px; border-radius: var(--radius-pill); border: 1px dashed var(--border); }
+.loT .loSec { color: #ffd98a; }
+.loTo { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; min-width: 0; }
+.loCh { display: flex; flex-wrap: wrap; gap: 4px; }
+button.loT { cursor: pointer; font: inherit; color: var(--ink); background: rgba(255,255,255,.05); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 3px 8px; text-align: left; }
+button.loT:hover, button.loT:focus-visible { border-color: var(--brass); box-shadow: var(--glow-brand-soft); outline: none; }
+button.loT.on { border-color: rgba(107,200,140,.9); background: rgba(107,200,140,.14); }
+.loPicked { display: inline-flex; gap: 4px; align-items: baseline; padding: 2px 8px; border-radius: var(--radius-sm); border: 1px solid rgba(107,200,140,.7); }
+.loBy { color: var(--ink-dim); font-size: max(12px, calc(11px * var(--fs))); }
+.loGone { color: #ffb3a8; font-size: max(12px, calc(11.5px * var(--fs))); }
+.loAsk { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; padding: 8px 10px;
+  border-radius: var(--radius-sm); border: 1px solid rgba(255,214,102,.55); background: rgba(255,214,102,.08); }
+.loAsk small { display: block; color: var(--ink-dim); font-size: max(12px, calc(11.5px * var(--fs))); overflow-wrap: anywhere; }
+.loAsk b { font-family: var(--mono); overflow-wrap: anywhere; }
+.loAskB { display: flex; gap: 6px; margin-left: auto; }
+.loSaving { color: #ffe7a8; font-size: max(12px, calc(12px * var(--fs))); display: flex; align-items: center; gap: 6px; }
+.loWrap .lkPick .loT.lkHit { display: flex; border-radius: var(--radius-sm); font-family: inherit; }
+@media (max-width: 720px) {
+  .loRow { grid-template-columns: minmax(0, 1fr); }
+  .loRow .lkArrow { display: none; }
+  .loRow .lkActs { justify-content: flex-start; }
+}
 </style>
 
 <style>
@@ -3079,7 +3112,7 @@ button.shPt { font: inherit; color: inherit; font-family: var(--mono); font-size
 <div id="toast" class="toast" hidden></div>
 
 <script>
-window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16b';   // 🔎 file stamp for smv2_checkFiles (code, not a comment: Apps Script strips comments)
+window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-17';   // 🔎 file stamp for smv2_checkFiles (code, not a comment: Apps Script strips comments)
 /* SMV2_Common.html — shared page scripts (merged 01/10/2026):
      1. window.SMV2Auth    — name + PIN login screen + welcome/loading box (was SMV2_Login.html)
      2. window.SMV2History — New House Stocks list + links           (was SMV2_History.html)
@@ -3716,9 +3749,10 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16b';   // 🔎 f
       it.link = Array.isArray(a[21]) && !it.places ? { model: a[21][0] || '', brand: a[21][1] || '', fam: a[21][2] || '', file: a[21][3] || '', own: a[21][4] || '' } : null;
       it.other = Array.isArray(a[22]) && !it.places ? a[22].map(function (c) { return { p: c[0], raw: c[1], st: CODE_STATE[c[2]] || (c[1] === '' ? '' : 'NOTE'), d: c[3] || '' }; }) : null;
       it.fixed = a[24] && typeof a[24] === 'object' && !it.places ? a[24] : null;   // [24] ✎ days changed by an admin {date: [old, by, at, note, removed]} (13/11/2026)
+      it.aka = Array.isArray(a[25]) ? a[25].join(' ') : '';   // [25] 🔗 leftover names bound to this model: typing them finds it (17/11/2026)
       it.skips = Array.isArray(a[18]) ? a[18].map(function (i) { return dates[i] || ''; }).filter(String).sort() : [];   // [18] ⤼ "-" days = not counted that round (18/10/2026)
       it.key = a[23] ? String(a[23]) : g.srcKey + '|' + g.tab + '|' + g.grp + '|' + it.item + (a[2] ? '|' + a[2] : '') + (g.brand ? '|' + g.brand : '') + (it.spec ? '|' + it.spec : '');   // [23] an app model's own key (09/11/2026 d)
-      it.hay = low([catLabel(g.cat), g.brand, g.grp, g.en, g.sec, it.item, it.en, it.model || '', it.thName || '', it.link ? it.link.model + ' ' + it.link.brand + ' ' + it.link.own + ' ' + it.link.fam : '', it.spec, it.info, voltWords(it.item + ' ' + it.en + ' ' + it.spec + ' ' + it.info + ' ' + (it.thName || '')), cur.raw].join(' '));
+      it.hay = low([catLabel(g.cat), g.brand, g.grp, g.en, g.sec, it.item, it.en, it.model || '', it.thName || '', it.link ? it.link.model + ' ' + it.link.brand + ' ' + it.link.own + ' ' + it.link.fam : '', it.aka || '', it.spec, it.info, voltWords(it.item + ' ' + it.en + ' ' + it.spec + ' ' + it.info + ' ' + (it.thName || '')), cur.raw].join(' '));
       return it;
     });
     var catSecs = {};                                     // category -> {section: items} (for the quick-filter chips)
@@ -5147,6 +5181,7 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16b';   // 🔎 f
     { id: 'admin', cls: 'm4', ic: '🛠', nm: 'หน้าผู้ดูแล • Admin', sub: 'การ์ด แท็ก ตรวจยอด • Cards, tags, checks', q: '?page=admin', admin: true },
     { id: 'users', cls: 'm9', ic: '👥', nm: 'ผู้ใช้ • Users', sub: 'ชื่อ + PIN + ระดับ + สวิตช์ของแต่ละคน • Name + PIN + level + switches', q: '?page=users', admin: true, sup: true },
     { id: 'links', cls: 'm12', ic: '🔗', nm: 'ผูกรุ่น • Model Links', sub: 'รุ่นบ้านใหม่ ↔ แคตตาล็อก: ตรวจ ✓ / ↔ / ✕ • New House items ↔ catalogue models: check ✓ / ↔ / ✕', q: '?page=links', admin: true },
+    { id: 'leftovers', cls: 'm13', ic: '🔗', nm: 'รุ่นที่ค้าง • Leftover models', sub: 'รุ่นที่แสดงซ้ำใน 📤 ของออก → ผูกกับรุ่นที่นับ • Models shown twice in 📤 Stock out → bind to the counted model', q: '?page=leftovers', admin: true, sup: true },
     { id: 'sheets', cls: 'm7', ic: '📂', nm: 'ชีตทั้งหมด • All Stock Sheets', sub: 'ชีตหลัก V2 · ชีตบ้านใหม่ · ชีตสต๊อกตามแคตตาล็อก • V2 main sheet · New House · stock sheets by catalogue', q: '?page=sheets', admin: true },
     { id: 'home', cls: 'm5', ic: '⌂', nm: 'หน้าแรก • Home', sub: 'หน้าเลือกระบบ • The module landing page', q: '' }
   ];
@@ -6540,6 +6575,199 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16b';   // 🔎 f
     }
   };
 })();
+/* 🔗 SMV2Leftovers — leftover models (17/11/2026, Super Admin). ?page=leftovers
+   A model in SMV2_Items with no counted 🏭 model of exactly the same section + model shows twice in 📤 Stock out
+   ("80-20-7.5 · no count" next to "WQ80-20-7.5 · 15"). Here it is bound to the counted model (SMV2_Items.SameAs).
+   Data: smv2_leftoverList(key) -> {rows: [{row, sec, brand, spec, model, pack, src, grade, cands, same, not}], n}
+         smv2_leftoverModels(key) -> [[sec, brand, model, now, pack, spec]] (first 🔎 only)
+   Writes: smv2_leftoverSave([{row, model, sec, to: {sec, brand, model} | 'NOT' | ''}], key) — every change asks first (✓ Confirm),
+   then saves at once without blocking: the row leaves the list with ⏳, comes back with the reason if the save fails. */
+(function () {
+  var L = { o: null, host: null, rows: [], n: {}, f: 'SURE', q: '', pick: {}, ask: '', open: '', pq: '', models: null, lim: 200, busy: {}, all: false };
+  var G = [
+    ['SURE', '🟢', 'แน่ใจ', 'Sure'], ['OTHER', '🟢', 'แน่ใจ · ต่างชนิด', 'Sure · other section'], ['SEVERAL', '🔀', 'หลายตัว', 'Several'],
+    ['MAYBE', '🟡', 'อาจใช่', 'Maybe'], ['NONE', '⚪', 'ไม่พบ', 'None'], ['BOUND', '🔗', 'ผูกแล้ว', 'Bound'], ['NOT', '✕', 'ไม่ใช่', 'Not the same']
+  ];
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function toast(t) { if (L.o && L.o.toast) L.o.toast(t); }
+  function msg(e) { return String((e && e.message) || e).replace(/^Error:\s*/, ''); }
+  function run(fn, args, ok, fail) {
+    var r = google.script.run.withSuccessHandler(ok).withFailureHandler(fail || function (e) { toast('✕ ' + msg(e)); });
+    if (typeof r[fn] !== 'function') { toast('✕ ' + fn + ' missing on the server — deploy the latest code'); return; }
+    r[fn].apply(r, args);
+  }
+  function cmp(a, b, sa, sb) { return window.SMV2ModelCmp ? SMV2ModelCmp(sa || '', a, sb || '', b) : String(a).localeCompare(String(b)); }   // ↕ A→Z then 0→9
+  function gOf(r) { return r.same ? 'BOUND' : r.not ? 'NOT' : r.grade; }
+  function sure(r) { return !r.same && !r.not && (r.grade === 'SURE' || r.grade === 'OTHER') && r.cands.length === 1; }
+  function hay(r) { return r._h || (r._h = SMV2Find.sq([r.model, r.brand, r.spec, r.sec].concat(r.cands.map(function (c) { return c[2] + ' ' + c[1]; })).concat(r.same ? [r.same.model] : []).join(' ').toLowerCase())); }
+  function shown() {
+    var q = SMV2Find.sq(L.q.toLowerCase());
+    return L.rows.filter(function (r) { return !L.busy[r.row] && gOf(r) === L.f && (!q || hay(r).indexOf(q) >= 0); });
+  }
+  function count() { var n = {}; L.rows.forEach(function (r) { if (!L.busy[r.row]) { var g = gOf(r); n[g] = (n[g] || 0) + 1; } }); return n; }
+  function secShort(s) { return String(s || '').split(/\s+[-•]\s+/)[0]; }
+  /** one counted model: full model (wraps), brand, now, section when it is another one; everything on hover */
+  function tgtHtml(c, mySec, tag) {
+    var other = SMV2Find.sq(String(c[0]).toLowerCase()) !== SMV2Find.sq(String(mySec).toLowerCase());
+    var tip = [c[2], c[1], c[5], c[0], c[3] !== '' ? 'ตอนนี้ • now ' + c[3] : 'ยังไม่ได้นับ • not counted yet', c[4] ? '📦 ลังละ ' + c[4] : ''].filter(String).join(' · ');
+    return '<' + tag + ' class="loT"' + (tag === 'button' ? ' type="button" data-pick="' + esc(JSON.stringify([c[0], c[1], c[2]])) + '"' : '') + ' title="' + esc(tip) + '">' +
+      '<b class="loM">' + esc(c[2]) + '</b>' + (c[1] ? '<i class="lkB">' + esc(c[1]) + '</i>' : '') +
+      '<em class="lkNow">' + (c[3] !== '' ? esc(c[3]) : '–') + '</em>' + (c[4] ? '<small class="loPk">📦' + esc(c[4]) + '</small>' : '') +
+      (other ? '<small class="loSec">🗂 ' + esc(secShort(c[0])) + '</small>' : '') + '</' + tag + '>';
+  }
+  function pickOf(r) {
+    if (L.pick[r.row]) return L.pick[r.row];
+    if (!r.same && !r.not && r.cands.length === 1) return r.cands[0];
+    return null;
+  }
+  function rowHtml(r) {
+    var g = gOf(r), p = pickOf(r), acts = '', to = '';
+    if (r.same) to = tgtHtml([r.same.sec, r.same.brand, r.same.model, r.same.now || '', r.same.pack || 0, ''], r.sec, 'span') + (r.same.gone ? '<small class="loGone" title="ไม่พบรุ่นนี้ในรายการโกดังแล้ว (เปลี่ยนชื่อ?) ผูกใหม่ • This counted model is not in the Warehouse list any more (renamed?) — bind again">⚠ ไม่พบแล้ว • gone</small>' : '') + (r.same.by ? '<small class="loBy" title="' + esc(r.same.at) + '">' + esc(r.same.by) + '</small>' : '');
+    else if (r.not) to = '<span class="lkNo">✕ ไม่ใช่รุ่นเดียวกัน • not the same model</span>';
+    else if (r.cands.length > 1) to = '<span class="loCh" title="แตะเพื่อเลือก • Tap to pick">' + r.cands.map(function (c) { return tgtHtml(c, r.sec, 'button').replace('class="loT"', 'class="loT' + (p === c ? ' on' : '') + '"'); }).join('') + '</span>';
+    else if (r.cands.length === 1) to = tgtHtml(r.cands[0], r.sec, 'span');
+    if (!r.same && !r.not && L.pick[r.row] && r.cands.indexOf(L.pick[r.row]) < 0) to += '<span class="loPicked" title="เลือกจาก 🔎 • picked in 🔎">🔎 ' + tgtHtml(L.pick[r.row], r.sec, 'span') + '</span>';
+    if (!to) to = '<span class="lkNo">— ไม่พบรุ่นที่นับ • no counted model found</span>';
+    if (r.same) acts = '<button type="button" class="btn-ghost small" data-ask="clear" title="ยกเลิกการผูก รุ่นนี้กลับมาเป็นแถวของตัวเอง • Undo the bind — it shows as its own row again">✕ ยกเลิก • Undo</button>';
+    else if (r.not) acts = '<button type="button" class="btn-ghost small" data-ask="clear" title="ล้างคำตอบ ให้ตรวจใหม่ • Clear the answer, check it again">↺ ล้าง • Clear</button>';
+    else {
+      if (p) acts += '<button type="button" class="btn-primary small" data-ask="bind" title="ผูกกับรุ่นที่นับ • Bind to the counted model">✓ ผูก • Bind</button>';
+      acts += '<button type="button" class="btn-ghost small otIco" data-find="1" title="ค้นหารุ่นที่นับ • Search the counted models" aria-label="ค้นหารุ่นที่นับ • Search the counted models">🔎</button>';
+      acts += '<button type="button" class="btn-ghost small" data-ask="not" title="ไม่ใช่รุ่นเดียวกัน ไม่ต้องเสนออีก • Not the same — never offered again">✕ ไม่ใช่ • Not the same</button>';
+    }
+    var tip = [r.model, r.brand, r.spec, r.sec, r.src ? 'Source ' + r.src : '', r.pack ? '📦 ลังละ ' + r.pack : '', 'SMV2_Items row ' + r.row].filter(String).join(' · ');
+    var ask = L.ask && L.ask.split('|')[0] === String(r.row) ? L.ask.split('|')[1] : '';
+    return '<div class="loRow g-' + g + (ask ? ' ask' : '') + '" data-r="' + r.row + '">' +
+      '<span class="loL" title="' + esc(tip) + '"><b class="loM">' + esc(r.model) + '</b>' + (r.brand ? '<i class="lkB">' + esc(r.brand) + '</i>' : '') +
+        (r.spec ? '<small>⌁ ' + esc(r.spec) + '</small>' : '') + (r.pack ? '<small class="loPk">📦' + esc(r.pack) + '</small>' : '') + '<em class="loNo">no count</em></span>' +
+      '<span class="lkArrow" aria-hidden="true">→</span><span class="loTo">' + to + '</span><span class="lkActs">' + acts + '</span>' +
+      (ask ? askHtml(r, ask, p) : '') +
+      (L.open === String(r.row) ? '<div class="lkPick"><input type="search" class="lkPickQ" placeholder="🔍 พิมพ์รุ่น / แบรนด์ / ชนิด • type model / brand / section" value="' + esc(L.pq) + '" aria-label="ค้นหารุ่นที่นับ • Search the counted models"><div class="lkPickL">' + pickList(r) + '</div></div>' : '') +
+      '</div>';
+  }
+  function askHtml(r, what, p) {
+    var t = what === 'bind' && p ? 'ผูก • Bind <b>' + esc(r.model) + '</b> → <b>' + esc(p[2]) + '</b>' + (p[1] ? ' ' + esc(p[1]) : '') + ' ? <small>หายจากรายการ 📤 · พิมพ์ชื่อเดิมก็เจอ • leaves the 📤 lists · its old name finds the counted one</small>'
+      : what === 'not' ? 'ไม่ใช่รุ่นเดียวกัน • Not the same model: <b>' + esc(r.model) + '</b> ? <small>ไม่เสนออีก • never offered again</small>'
+      : 'ล้าง • Clear <b>' + esc(r.model) + '</b> ? <small>' + (r.same ? 'กลับมาเป็นแถวของตัวเองใน 📤 • shows as its own row in 📤 again' : 'กลับไปรอตรวจ • back to be checked') + '</small>';
+    return '<div class="loAsk" role="alertdialog" aria-label="ยืนยัน • Confirm"><span>' + t + '</span><span class="loAskB">' +
+      '<button type="button" class="btn-ghost small" data-no="1">ยกเลิก • Cancel</button><button type="button" class="btn-primary small" data-yes="' + what + '">✓ ยืนยัน • Confirm</button></span></div>';
+  }
+  function pickList(r) {
+    if (!L.models) return '<div class="lkHint"><span class="auroraLoader tiny"><span></span></span> กำลังโหลดรุ่นที่นับ… • Loading the counted models…</div>';
+    var q = SMV2Find.sq(String(L.pq || '').toLowerCase());
+    if (!q) return '<div class="lkHint">พิมพ์เพื่อค้นหา ' + L.models.length.toLocaleString('en-US') + ' รุ่น • Type to search ' + L.models.length.toLocaleString('en-US') + ' models</div>';
+    var hits = L.models.filter(function (m) { var h = m._h || (m._h = SMV2Find.sq((m[2] + ' ' + m[1] + ' ' + m[5] + ' ' + m[0]).toLowerCase())); return h.indexOf(q) >= 0; });
+    hits.sort(function (a, b) { return cmp(a[2], b[2], a[5], b[5]); });
+    return hits.slice(0, 30).map(function (m) { return tgtHtml(m, r.sec, 'button').replace('class="loT"', 'class="loT lkHit"'); }).join('') +
+      (hits.length > 30 ? '<div class="lkHint">+' + (hits.length - 30) + ' — พิมพ์เพิ่ม • type more</div>' : '') + (hits.length ? '' : '<div class="lkHint">ไม่พบ • Nothing found</div>');
+  }
+  function bulk() { return L.rows.filter(function (r) { return !L.busy[r.row] && gOf(r) === L.f && sure(r); }); }
+  function draw() {
+    var list = shown(), n = count(), groups = {}, order = [], b = (L.f === 'SURE' || L.f === 'OTHER') ? bulk() : [];
+    list.slice(0, L.lim).forEach(function (r) { if (!groups[r.sec]) { groups[r.sec] = []; order.push(r.sec); } groups[r.sec].push(r); });
+    var busyN = Object.keys(L.busy).length;
+    L.host.innerHTML = '<div class="lkWrap loWrap">' +
+      '<div class="lkTop hud-frame"><span class="lkSeg" role="tablist" aria-label="ระดับ • Grade">' + G.map(function (g) {
+        return '<button type="button" role="tab" aria-selected="' + (L.f === g[0]) + '" class="' + (L.f === g[0] ? 'on' : '') + '" data-f="' + g[0] + '" title="' + esc(g[2] + ' • ' + g[3]) + '">' + g[1] + ' ' + g[2] + ' <small>' + g[3] + '</small><b>' + (n[g[0]] || 0) + '</b></button>';
+      }).join('') + '</span>' +
+      '<input type="search" id="loQ" class="lkQ" placeholder="🔍 ค้นหา • Search" value="' + esc(L.q) + '" aria-label="ค้นหา • Search">' +
+      (b.length ? '<button type="button" class="btn-primary small" data-all="1" title="ผูกทุกแถวที่มีรุ่นที่นับตัวเดียว (ถามก่อน) • Bind every row with exactly one counted model (asks first)">✓ ผูกทั้งหมดที่แน่ใจ • Bind all sure ones (' + b.length + ')</button>' : '') + '</div>' +
+      (L.all ? '<div class="loAsk hud-frame" role="alertdialog"><span>ผูก • Bind <b>' + b.length + '</b> รายการ • rows (' + esc(G.filter(function (g) { return g[0] === L.f; })[0][3]) + ') ? <small>' +
+        b.slice(0, 4).map(function (r) { return esc(r.model) + ' → ' + esc(r.cands[0][2]); }).join(' · ') + (b.length > 4 ? ' …' : '') + '</small></span><span class="loAskB">' +
+        '<button type="button" class="btn-ghost small" data-allno="1">ยกเลิก • Cancel</button><button type="button" class="btn-primary small" data-allyes="1">✓ ยืนยัน ' + b.length + ' • Confirm</button></span></div>' : '') +
+      '<p class="lkLead">📚 รุ่นใน SMV2_Items ที่ไม่ตรงกับรุ่นที่นับ (แสดงซ้ำเป็น "no count" ใน 📤) → 🏭 รุ่นที่นับ · ผูกแล้ว = หายจากรายการ 📤 พิมพ์ชื่อเดิมก็เจอรุ่นที่นับ ไม่มีอะไรถูกลบ • ' +
+        'SMV2_Items models with no exact counted match (shown twice in 📤) → the counted model · bound = gone from the 📤 lists, its old name finds the counted one, nothing is deleted</p>' +
+      (busyN ? '<div class="loSaving"><span class="auroraLoader tiny"><span></span></span> ⏳ กำลังบันทึก ' + busyN + ' รายการ… • Saving ' + busyN + '…</div>' : '') +
+      (list.length ? order.map(function (s) {
+        return '<section class="lkGrp"><h4 title="' + esc(s) + '">🗂 ' + esc(s) + ' <small>' + groups[s].length + '</small></h4>' + groups[s].map(rowHtml).join('') + '</section>';
+      }).join('') + (list.length > L.lim ? '<button type="button" class="btn-ghost lkMore" data-more="1">แสดงเพิ่ม • Show more (' + (list.length - L.lim) + ')</button>' : '')
+        : '<div class="shEmpty">✓ ไม่มีรายการ • Nothing here</div>') + '</div>';
+  }
+  function rowOf(n) { n = Number(n); return L.rows.filter(function (r) { return r.row === n; })[0]; }
+  function redrawRow(n) { var el = L.host.querySelector('.loRow[data-r="' + n + '"]'), r = rowOf(n); if (el && r) el.outerHTML = rowHtml(r); }
+  function loadModels(after) {
+    if (L.models) { after(); return; }
+    run('smv2_leftoverModels', [L.o.key], function (m) { L.models = m || []; after(); });
+  }
+  /** saves at once; the rows leave the list with ⏳ and come back with the reason when it fails */
+  function save(rs, to, done) {
+    var ch = rs.map(function (r) { var t = typeof to === 'function' ? to(r) : to; return { row: r.row, model: r.model, sec: r.sec, to: t }; });
+    rs.forEach(function (r) { L.busy[r.row] = 1; });
+    L.ask = ''; L.all = false; L.open = ''; draw();
+    var end = SMV2Busy.saving('การผูกรุ่น • the leftover models');
+    run('smv2_leftoverSave', [ch, L.o.key], function (res) {
+      end();
+      ch.forEach(function (c) {
+        var r = rowOf(c.row); delete L.busy[c.row]; if (!r) return; r._h = ''; delete L.pick[c.row];
+        if (c.to && typeof c.to === 'object') { var k = c.to; r.same = { model: k.model, sec: k.sec, brand: k.brand, now: k.now || '', pack: k.pack || 0, by: L.o.me || '', at: '' }; r.not = false; }
+        else if (c.to === 'NOT') { r.not = true; r.same = null; } else { r.not = false; r.same = null; }
+      });
+      draw();
+      var sk = (res && res.skipped) || 0;
+      toast('✓ บันทึก ' + ((res && res.saved) || 0) + ' รายการ • Saved — 📤 lists use it now' + (sk ? ' · ⚠ ' + sk + ' แถวเปลี่ยนในชีต โหลดใหม่ • rows changed in the sheet, reload' : ''));
+      if (done) done();
+    }, function (e) {
+      end(); ch.forEach(function (c) { delete L.busy[c.row]; }); draw();
+      toast('✕ ยังไม่ได้บันทึก • Not saved: ' + msg(e));
+    });
+  }
+  function onClick(e) {
+    var f = e.target.closest('[data-f]'); if (f) { L.f = f.dataset.f; L.lim = 200; L.open = ''; L.ask = ''; L.all = false; draw(); return; }
+    if (e.target.closest('[data-more]')) { L.lim += 300; draw(); return; }
+    if (e.target.closest('[data-all]')) { L.all = true; L.ask = ''; draw(); return; }
+    if (e.target.closest('[data-allno]')) { L.all = false; draw(); return; }
+    if (e.target.closest('[data-allyes]')) { var b = bulk(); if (b.length) save(b, function (r) { var c = r.cands[0]; return { sec: c[0], brand: c[1], model: c[2], now: c[3], pack: c[4] }; }); return; }
+    var row = e.target.closest('.loRow'); if (!row) return;
+    var n = row.dataset.r, r = rowOf(n); if (!r) return;
+    var pk = e.target.closest('[data-pick]');
+    if (pk) {
+      var v = JSON.parse(pk.dataset.pick), c = r.cands.filter(function (x) { return x[0] === v[0] && x[1] === v[1] && x[2] === v[2]; })[0] ||
+        (L.models || []).filter(function (x) { return x[0] === v[0] && x[1] === v[1] && x[2] === v[2]; })[0] || [v[0], v[1], v[2], '', 0, ''];
+      L.pick[r.row] = c; L.open = ''; L.ask = n + '|bind'; redrawRow(n); return;
+    }
+    var a = e.target.closest('[data-ask]'); if (a) { L.ask = n + '|' + a.dataset.ask; L.open = ''; redrawRow(n); return; }
+    if (e.target.closest('[data-no]')) { L.ask = ''; redrawRow(n); return; }
+    var y = e.target.closest('[data-yes]');
+    if (y) {
+      var w = y.dataset.yes, p = pickOf(r);
+      if (w === 'bind') { if (!p) return; save([r], { sec: p[0], brand: p[1], model: p[2], now: p[3], pack: p[4] }); }
+      else save([r], w === 'not' ? 'NOT' : '');
+      return;
+    }
+    if (e.target.closest('[data-find]')) {
+      var was = L.open; L.open = was === n ? '' : n; L.pq = L.open ? String(r.model) : ''; L.ask = '';
+      if (was && was !== n) redrawRow(was);
+      redrawRow(n);
+      if (L.open) loadModels(function () { var box = L.host.querySelector('.loRow[data-r="' + n + '"] .lkPickL'); if (box) box.innerHTML = pickList(r); var qi = L.host.querySelector('.lkPickQ'); if (qi) { qi.focus(); qi.select(); } });
+    }
+  }
+  function onInput(e) {
+    if (e.target.id === 'loQ') { L.q = e.target.value; clearTimeout(L.t); L.t = setTimeout(function () { var pos = e.target.selectionStart; draw(); var q = $('loQ'); if (q) { q.focus(); try { q.setSelectionRange(pos, pos); } catch (x) {} } }, 200); return; }
+    if (e.target.classList.contains('lkPickQ')) { L.pq = e.target.value; var row = e.target.closest('.loRow'), r = row && rowOf(row.dataset.r), box = e.target.parentNode.querySelector('.lkPickL'); if (box && r) box.innerHTML = pickList(r); }
+  }
+  function onKey(e) {
+    if (e.key !== 'Escape') return;
+    if (L.all) { L.all = false; draw(); return; }
+    if (L.ask) { var n = L.ask.split('|')[0]; L.ask = ''; redrawRow(n); return; }
+    if (L.open) { var o = L.open; L.open = ''; redrawRow(o); }
+  }
+  window.SMV2Leftovers = {
+    mount: function (host, o) {
+      L.o = o || {}; L.host = host;
+      var block = function (why) { host.innerHTML = '<div class="roleBlock hud-frame"><div class="ic">🔒</div><h2>ผู้ดูแลสูงสุดเท่านั้น • Super Admin only</h2><p>' + esc(why || 'เปิดจากลิงก์ผู้ดูแล (กุญแจ) • Open it from the admin link (key)') + '</p></div>'; if (window.SMV2Auth) SMV2Auth.done(); };
+      if (!L.o.key || (window.SMV2Auth && SMV2Auth.role && SMV2Auth.role() && SMV2Auth.role() !== 'SUPER')) { block(); return; }
+      host.innerHTML = '<div class="shEmpty"><div class="auroraLoader big"><span></span></div><div class="auroraText">กำลังเทียบรุ่นที่ค้างกับรุ่นที่นับ… Matching the leftover models with the counted ones…</div></div>';
+      if (!host._lo) { host._lo = true; host.addEventListener('click', onClick); host.addEventListener('input', onInput); document.addEventListener('keydown', onKey); }
+      run('smv2_leftoverList', [L.o.key], function (d) {
+        L.rows = (d && d.rows) || []; L.busy = {}; L.pick = {};
+        var n = count(); if (!n[L.f]) { var g = G.filter(function (x) { return n[x[0]]; })[0]; if (g) L.f = g[0]; }
+        if (L.o.meta) L.o.meta.textContent = L.rows.length + ' รุ่นที่ค้าง • leftover models';
+        draw(); if (window.SMV2Auth) SMV2Auth.done();
+      }, function (e) { if (/Super Admin|ไม่มีสิทธิ์/.test(msg(e))) block(msg(e)); else { host.innerHTML = '<div class="shEmpty">✕ ' + esc(msg(e)) + '</div>'; if (window.SMV2Auth) SMV2Auth.done(); } });
+    }
+  };
+})();
 /* 📦 SMV2Out — Stock Allocations (17/10/2026 d, Aowu; was 📤 Fast stock out). ?page=out[&place=NH][&mode=IN][&match=1]
    Modes: 📦 COUNT (Admin / Super Admin) · 🆕 IN (stock in) · 📤 OUT (stock out) — IN / OUT: Manager with that place's stock switch.
    Places: 🏭 WH Warehouse (Admin default) · 🏠 NH New House (only the places the user may see).
@@ -7068,7 +7296,7 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16b';   // 🔎 f
     var words = String(q || '').toLowerCase().split(/\s+/).filter(String); if (!words.length) return [];
     var out = [];
     for (var i = 0; i < O.d.items.length && out.length < 60; i++) {
-      var it = O.d.items[i], hay = it._h || (it._h = (it[3] + ' ' + it[1] + ' ' + it[2] + ' ' + it[0] + ' ' + specOf(it)).toLowerCase()), sq = it._s || (it._s = SMV2Find.sq(hay));
+      var it = O.d.items[i], hay = it._h || (it._h = (it[3] + ' ' + it[1] + ' ' + it[2] + ' ' + it[0] + ' ' + specOf(it) + ' ' + (it[9] || '')).toLowerCase()), sq = it._s || (it._s = SMV2Find.sq(hay));
       if (SMV2Find.hit(hay, words, sq)) out.push(it);
     }
     var w0 = SMV2Find.sq(words.join(''));
@@ -7080,7 +7308,7 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16b';   // 🔎 f
     O.hits = find(q); O.hi = O.hits.length ? 0 : -1;
     if (!q) { box.hidden = true; return; }
     box.innerHTML = O.hits.map(function (it, i) {
-      return '<button type="button" role="option" aria-selected="' + (i === O.hi) + '" class="otHit' + (i === O.hi ? ' on' : '') + '" data-h="' + i + '"><b>' + (it[8] ? '<span class="otChap" title="' + esc(it[8] + ' · ' + (window.SMV2Chapters ? SMV2Chapters.name(it[8]) : '')) + '">' + esc(it[8]) + '</span>' : '') + '<span class="otHM" title="' + esc(it[3]) + '">' + esc(it[3]) + '</span>' + packChip(it[5]) + '</b>' + (specOf(it) ? '<span class="otSpec">' + esc(specOf(it)) + '</span>' : '') + '<small>' + esc(subOf(it)) + '</small>' + nowHtml(it[4]) + '</button>';
+      return '<button type="button" role="option" aria-selected="' + (i === O.hi) + '" class="otHit' + (i === O.hi ? ' on' : '') + '" data-h="' + i + '"><b>' + (it[8] ? '<span class="otChap" title="' + esc(it[8] + ' · ' + (window.SMV2Chapters ? SMV2Chapters.name(it[8]) : '')) + '">' + esc(it[8]) + '</span>' : '') + '<span class="otHM" title="' + esc(it[3]) + (it[9] ? ' = ' + it[9] : '') + '">' + esc(it[3]) + '</span>' + packChip(it[5]) + '</b>' + (it[9] ? '<span class="otAka" title="🔗 ชื่อเดิมที่ผูกกับรุ่นนี้ • Old names bound to this model">= ' + esc(it[9]) + '</span>' : '') + (specOf(it) ? '<span class="otSpec">' + esc(specOf(it)) + '</span>' : '') + '<small>' + esc(subOf(it)) + '</small>' + nowHtml(it[4]) + '</button>';
     }).join('') + '<button type="button" role="option" class="otHit free" data-h="-2">✎ ใช้ "' + esc(q) + '" ตามที่พิมพ์ (ไม่อยู่ในรายการ) • Use as typed (not in the list)</button>';
     box.hidden = false;
   }
@@ -7705,6 +7933,7 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16b';   // 🔎 f
     if (p.page === 'map') { beginMap(p, key, token); return; }
     if (p.page === 'users') { beginUsers(p, key, token); return; }
     if (p.page === 'links') { beginLinks(p, key, token); return; }
+    if (p.page === 'leftovers') { beginLeftovers(p, key, token); return; }
     if (p.page === 'out') { beginOut(p, key, token); return; }
     var lc = String(p.loc || (p.page === 'view' ? 'all' : '')).toLowerCase(), wh = lc === 'wh', all = lc === 'all', oh = lc === 'oh';
     setPlace(wh, all, oh);
@@ -7796,6 +8025,20 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16b';   // 🔎 f
     SMV2Links.mount($('stockMount'), { key: key, toast: toast, meta: $('stkMeta') });
     if (begun) return; begun = true;
     SMV2Modules.attach($('modBtn'), { current: 'links', key: key });
+    SMV2History.preload(function () { SMV2Modules.refresh(); });
+  }
+  /* 🔗 Leftover models (17/11/2026, Super Admin): SMV2_Items models shown twice in 📤 -> bind to the counted model */
+  function beginLeftovers(p, key, token) {
+    document.title = 'รุ่นที่ค้าง • Leftover models';
+    $('stkTitleT').textContent = '🔗 รุ่นที่ค้าง • Leftover models';
+    $('stkSub').textContent = 'รุ่นในรายการสินค้าที่แสดงซ้ำใน 📤 ของออก: ✓ ผูกกับรุ่นที่นับ / ✕ ไม่ใช่ (ถามก่อนทุกครั้ง · ผู้ดูแลสูงสุดเท่านั้น) • Models shown twice in 📤 Stock out: ✓ bind to the counted model / ✕ not the same (asks first every time · Super Admin only)';
+    var l = $('stkLoc'); l.textContent = '📚 → 🏭'; l.classList.add('wh');
+    $('stkMeta').textContent = '';
+    SMV2Auth.chip($('stkUser'));
+    SMV2History.config({ token: token, adminKey: key });
+    SMV2Leftovers.mount($('stockMount'), { key: key, toast: toast, meta: $('stkMeta'), me: (window.SMV2Auth && SMV2Auth.name && SMV2Auth.name()) || 'Super Admin' });
+    if (begun) return; begun = true;
+    SMV2Modules.attach($('modBtn'), { current: 'leftovers', key: key });
     SMV2History.preload(function () { SMV2Modules.refresh(); });
   }
   /* 👥 Users (10/10/2026, Super Admin = admin link) */

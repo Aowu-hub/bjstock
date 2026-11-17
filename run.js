@@ -6,7 +6,7 @@
 (function () {
   'use strict';
   var BASE = location.pathname.replace(/[^/]*$/, ''), ROOT = location.origin + BASE, LS = 'bjstock.unlock.v1';
-  var FILE = { stock: 'stock.html', view: 'stock.html', sheets: 'stock.html', map: 'stock.html', users: 'stock.html', out: 'stock.html', links: 'stock.html', photos: 'view.html', admin: 'admin.html' };
+  var FILE = { stock: 'stock.html', view: 'stock.html', sheets: 'stock.html', map: 'stock.html', users: 'stock.html', out: 'stock.html', links: 'stock.html', leftovers: 'stock.html', photos: 'view.html', admin: 'admin.html' };
   var here = location.pathname.slice(BASE.length) || 'index.html', P = new URLSearchParams(location.search), pg = P.get('page');
   // 🛡 Super Admin on the installed app (13/11/2026 d): the app always starts at /bjstock/ without ?admin=…, so a device that
   // once opened an &admin= link remembers it and puts it back; ?admin=off forgets it (the server still checks the key every call)

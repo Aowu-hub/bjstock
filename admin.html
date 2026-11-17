@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="bjstock-version" content="v2026.11.16-1429">
+<meta name="bjstock-version" content="v2026.11.17-0946">
 <meta name="theme-color" content="#140a20">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icons/icon-192.png">
@@ -11,8 +11,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="BJ Stock">
 <title>Stock Master V2 • Admin</title>
-<link rel="stylesheet" href="run.css?v2026.11.16-1429">
-<script src="run.js?v2026.11.16-1429"></script>
+<link rel="stylesheet" href="run.css?v2026.11.17-0946">
+<script src="run.js?v2026.11.17-0946"></script>
   <meta name="smv2-file" content="SMV2_FILE:SMV2_Index patch 2026-10-31">
 <!-- SMV2_Index.html
      Stock Master V2 page shell. Pulls in SMV2_Styles (CSS) and
@@ -30,7 +30,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-.smv2-file-stamp::after { content: "SMV2_FILE:SMV2_Styles patch 2026-11-16b"; }
+.smv2-file-stamp::after { content: "SMV2_FILE:SMV2_Styles patch 2026-11-17"; }
 /* SMV2_Styles.html — ALL styles for every page (admin, viewer, New House Stocks, login), merged 01/10/2026.
    Stock Master V2 — all CSS. Theme tokens, background system, HUD
    corner brackets and the spinning star checkbox are carried over from
@@ -3031,6 +3031,39 @@ button.shPt { font: inherit; color: inherit; font-family: var(--mono); font-size
 .fxOld { color: var(--ink-dim); text-decoration: line-through; }
 .fxTo { color: #ffc46b; font-weight: 700; }
 .fxTo small { font-size: .6em; font-weight: 400; color: var(--ink-dim); }
+/* 🔗 Leftover models (17/11/2026, ?page=leftovers) + the old name under a 📤 search hit */
+.modCard.m13 { --c: rgba(120,220,255,.75); } .homeCard.m13 { --c: rgba(120,220,255,.75); --g: rgba(120,220,255,.18); }
+.otHit .otAka { grid-column: 1; color: #9fe3ff; font-family: var(--mono); font-size: max(12px, calc(11.5px * var(--fs))); overflow-wrap: anywhere; }
+.loRow { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.25fr) auto; gap: 8px; align-items: center; padding: 7px 10px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm); background: rgba(255,255,255,.03); margin-bottom: 4px; }
+.loRow.ask { border-color: rgba(255,214,102,.6); background: rgba(255,214,102,.06); }
+.loRow.g-BOUND { border-left: 3px solid rgba(107,200,140,.75); }
+.loRow.g-NOT { opacity: .85; }
+.loL, .loT { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 4px 6px; min-width: 0; }
+.loM { font-family: var(--mono); overflow-wrap: anywhere; }
+.loL small, .loT small { color: var(--ink-dim); font-size: max(12px, calc(11.5px * var(--fs))); }
+.loL .loNo { font-style: normal; color: var(--ink-dim); font-size: max(12px, calc(11px * var(--fs))); padding: 0 6px; border-radius: var(--radius-pill); border: 1px dashed var(--border); }
+.loT .loSec { color: #ffd98a; }
+.loTo { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; min-width: 0; }
+.loCh { display: flex; flex-wrap: wrap; gap: 4px; }
+button.loT { cursor: pointer; font: inherit; color: var(--ink); background: rgba(255,255,255,.05); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 3px 8px; text-align: left; }
+button.loT:hover, button.loT:focus-visible { border-color: var(--brass); box-shadow: var(--glow-brand-soft); outline: none; }
+button.loT.on { border-color: rgba(107,200,140,.9); background: rgba(107,200,140,.14); }
+.loPicked { display: inline-flex; gap: 4px; align-items: baseline; padding: 2px 8px; border-radius: var(--radius-sm); border: 1px solid rgba(107,200,140,.7); }
+.loBy { color: var(--ink-dim); font-size: max(12px, calc(11px * var(--fs))); }
+.loGone { color: #ffb3a8; font-size: max(12px, calc(11.5px * var(--fs))); }
+.loAsk { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; padding: 8px 10px;
+  border-radius: var(--radius-sm); border: 1px solid rgba(255,214,102,.55); background: rgba(255,214,102,.08); }
+.loAsk small { display: block; color: var(--ink-dim); font-size: max(12px, calc(11.5px * var(--fs))); overflow-wrap: anywhere; }
+.loAsk b { font-family: var(--mono); overflow-wrap: anywhere; }
+.loAskB { display: flex; gap: 6px; margin-left: auto; }
+.loSaving { color: #ffe7a8; font-size: max(12px, calc(12px * var(--fs))); display: flex; align-items: center; gap: 6px; }
+.loWrap .lkPick .loT.lkHit { display: flex; border-radius: var(--radius-sm); font-family: inherit; }
+@media (max-width: 720px) {
+  .loRow { grid-template-columns: minmax(0, 1fr); }
+  .loRow .lkArrow { display: none; }
+  .loRow .lkActs { justify-content: flex-start; }
+}
 </style>
 
 </head>
@@ -3233,7 +3266,7 @@ button.shPt { font: inherit; color: inherit; font-family: var(--mono); font-size
 <div id="toast" class="toast" hidden></div>
 
 <script>
-window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16b';   // 🔎 file stamp for smv2_checkFiles (code, not a comment: Apps Script strips comments)
+window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-17';   // 🔎 file stamp for smv2_checkFiles (code, not a comment: Apps Script strips comments)
 /* SMV2_Common.html — shared page scripts (merged 01/10/2026):
      1. window.SMV2Auth    — name + PIN login screen + welcome/loading box (was SMV2_Login.html)
      2. window.SMV2History — New House Stocks list + links           (was SMV2_History.html)
@@ -3870,9 +3903,10 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16b';   // 🔎 f
       it.link = Array.isArray(a[21]) && !it.places ? { model: a[21][0] || '', brand: a[21][1] || '', fam: a[21][2] || '', file: a[21][3] || '', own: a[21][4] || '' } : null;
       it.other = Array.isArray(a[22]) && !it.places ? a[22].map(function (c) { return { p: c[0], raw: c[1], st: CODE_STATE[c[2]] || (c[1] === '' ? '' : 'NOTE'), d: c[3] || '' }; }) : null;
       it.fixed = a[24] && typeof a[24] === 'object' && !it.places ? a[24] : null;   // [24] ✎ days changed by an admin {date: [old, by, at, note, removed]} (13/11/2026)
+      it.aka = Array.isArray(a[25]) ? a[25].join(' ') : '';   // [25] 🔗 leftover names bound to this model: typing them finds it (17/11/2026)
       it.skips = Array.isArray(a[18]) ? a[18].map(function (i) { return dates[i] || ''; }).filter(String).sort() : [];   // [18] ⤼ "-" days = not counted that round (18/10/2026)
       it.key = a[23] ? String(a[23]) : g.srcKey + '|' + g.tab + '|' + g.grp + '|' + it.item + (a[2] ? '|' + a[2] : '') + (g.brand ? '|' + g.brand : '') + (it.spec ? '|' + it.spec : '');   // [23] an app model's own key (09/11/2026 d)
-      it.hay = low([catLabel(g.cat), g.brand, g.grp, g.en, g.sec, it.item, it.en, it.model || '', it.thName || '', it.link ? it.link.model + ' ' + it.link.brand + ' ' + it.link.own + ' ' + it.link.fam : '', it.spec, it.info, voltWords(it.item + ' ' + it.en + ' ' + it.spec + ' ' + it.info + ' ' + (it.thName || '')), cur.raw].join(' '));
+      it.hay = low([catLabel(g.cat), g.brand, g.grp, g.en, g.sec, it.item, it.en, it.model || '', it.thName || '', it.link ? it.link.model + ' ' + it.link.brand + ' ' + it.link.own + ' ' + it.link.fam : '', it.aka || '', it.spec, it.info, voltWords(it.item + ' ' + it.en + ' ' + it.spec + ' ' + it.info + ' ' + (it.thName || '')), cur.raw].join(' '));
       return it;
     });
     var catSecs = {};                                     // category -> {section: items} (for the quick-filter chips)
@@ -5301,6 +5335,7 @@ window.SMV2_FILE_COMMON = 'SMV2_FILE:SMV2_Common patch 2026-11-16b';   // 🔎 f
     { id: 'admin', cls: 'm4', ic: '🛠', nm: 'หน้าผู้ดูแล • Admin', sub: 'การ์ด แท็ก ตรวจยอด • Cards, tags, checks', q: '?page=admin', admin: true },
     { id: 'users', cls: 'm9', ic: '👥', nm: 'ผู้ใช้ • Users', sub: 'ชื่อ + PIN + ระดับ + สวิตช์ของแต่ละคน • Name + PIN + level + switches', q: '?page=users', admin: true, sup: true },
     { id: 'links', cls: 'm12', ic: '🔗', nm: 'ผูกรุ่น • Model Links', sub: 'รุ่นบ้านใหม่ ↔ แคตตาล็อก: ตรวจ ✓ / ↔ / ✕ • New House items ↔ catalogue models: check ✓ / ↔ / ✕', q: '?page=links', admin: true },
+    { id: 'leftovers', cls: 'm13', ic: '🔗', nm: 'รุ่นที่ค้าง • Leftover models', sub: 'รุ่นที่แสดงซ้ำใน 📤 ของออก → ผูกกับรุ่นที่นับ • Models shown twice in 📤 Stock out → bind to the counted model', q: '?page=leftovers', admin: true, sup: true },
     { id: 'sheets', cls: 'm7', ic: '📂', nm: 'ชีตทั้งหมด • All Stock Sheets', sub: 'ชีตหลัก V2 · ชีตบ้านใหม่ · ชีตสต๊อกตามแคตตาล็อก • V2 main sheet · New House · stock sheets by catalogue', q: '?page=sheets', admin: true },
     { id: 'home', cls: 'm5', ic: '⌂', nm: 'หน้าแรก • Home', sub: 'หน้าเลือกระบบ • The module landing page', q: '' }
   ];
